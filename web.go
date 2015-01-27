@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	ical "github.com/laurent22/ical-go"
-	"log"
 	"net/http"
 	"time"
 )
