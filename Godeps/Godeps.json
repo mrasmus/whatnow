@@ -1,0 +1,10 @@
+{
+	"ImportPath": "github.com/mrasmus/whatnow",
+	"GoVersion": "go1.2",
+	"Deps": [
+		{
+			"ImportPath": "github.com/laurent22/ical-go",
+			"Rev": "0bf0722e5241480dae7206b1d353080a520e976d"
+		}
+	]
+}
