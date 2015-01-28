@@ -1,0 +1,43 @@
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <title>WhatNow GCal Message Bar</title>
+  <script type='text/javascript' src='//code.jquery.com/jquery-2.1.0.js'></script>
+
+  <style type='text/css'>
+  </style>
+<script type='text/javascript'>
+$(window).load(function(){
+var terms = [""];
+var ajaxUrl = "";
+
+function updateData() {
+    $.ajax({url: ajaxUrl, dataType:"jsonp"}).done(function( data ) {
+        terms = data ? data : [""];
+  });
+}
+
+function rotateTerm() {
+  var ct = $("#rotate").data("term") || 0;
+  $("#rotate").data("term", ct >= terms.length -1 ? 0 : ct + 1).text(terms[ct]).fadeIn(500)
+              .delay(15000).fadeOut(500, rotateTerm);
+    updateData();
+}
+
+$.initialize = function () {
+    console.log("test");
+    if (window.location.hash == "") {
+        $("#rotate").html("<input id='calid'><button onclick='window.location.hash=$(\"#calid\").val(); $.initialize();'>Load</button>");
+    } else {
+        ajaxUrl = "/whatnow.js?calid="+ window.location.hash.substring(1) +"&jsonp=?";
+rotateTerm();
+    }
+}
+
+$.initialize();
+});
+</script>
+</head>
+<body>
+  <div id="container"><span id="rotate"></span></div>
+</body>
+</html>

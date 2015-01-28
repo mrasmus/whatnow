@@ -12,6 +12,10 @@ import (
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "index.html")
+	})
+
+	http.HandleFunc("/whatnow.js", func(w http.ResponseWriter, r *http.Request) {
 		callback := r.FormValue("jsonp")
 		calid := r.FormValue("calid")
 		res, _ := http.Get("https://www.google.com/calendar/ical/" + calid + "%40group.calendar.google.com/public/basic.ics")
