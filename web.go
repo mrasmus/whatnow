@@ -35,6 +35,8 @@ func main() {
 			}
 		}
 		jsonBytes, _ := json.Marshal(summaries)
+
+		w.Header().Set("Content-Type", "text/javascript")
 		if callback != "" {
 			fmt.Fprintf(w, "%s(%s)", callback, string(jsonBytes))
 		} else {
