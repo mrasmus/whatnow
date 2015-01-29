@@ -4,6 +4,20 @@
   <script type='text/javascript' src='//code.jquery.com/jquery-2.1.0.js'></script>
 
   <style type='text/css'>
+    .container {
+	    -webkit-transform-style: preserve-3d;
+	    -moz-transform-style: preserve-3d;
+	    transform-style: preserve-3d;
+	    text-align: center;
+    }
+
+    #rotate {
+	    position: relative;
+	    top: 50%;
+	    transform: translateY(-50%);
+	    width: 100%;
+	    font-family: "Arial Black", Gadget, sans-serif;
+    }
   </style>
 <script type='text/javascript'>
 $(window).load(function(){
@@ -13,23 +27,25 @@ var ajaxUrl = "";
 function updateData() {
     $.ajax({url: ajaxUrl, dataType:"jsonp"}).done(function( data ) {
         terms = data ? data : [""];
+	if ($("#rotate").text() == "") {
+	     $("#rotate").text(data[0]).data("term", 1);
+    	}
   });
 }
 
 function rotateTerm() {
-  var ct = $("#rotate").data("term") || 0;
-  $("#rotate").data("term", ct >= terms.length -1 ? 0 : ct + 1).text(terms[ct]).fadeIn(500)
+    var ct = $("#rotate").data("term") || 0;
+    $("#rotate").data("term", ct >= terms.length -1 ? 0 : ct + 1).text(terms[ct]).fadeIn(500)
               .delay(15000).fadeOut(500, rotateTerm);
     updateData();
 }
 
 $.initialize = function () {
-    console.log("test");
     if (window.location.hash == "") {
         $("#rotate").html("<input id='calid'><button onclick='window.location.hash=$(\"#calid\").val(); $.initialize();'>Load</button>");
     } else {
         ajaxUrl = "/whatnow.js?calid="+ window.location.hash.substring(1) +"&jsonp=?";
-rotateTerm();
+        rotateTerm();
     }
 }
 
@@ -38,6 +54,6 @@ $.initialize();
 </script>
 </head>
 <body>
-  <div id="container"><span id="rotate"></span></div>
+  <div class="container"><span id="rotate"></span></div>
 </body>
 </html>
